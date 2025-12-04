@@ -1,0 +1,242 @@
+body{
+    position: relative;
+    font-family: 'montserrat';
+}
+
+
+.menu{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 30px;
+    width: 40px ;
+    height: 12px;
+}
+
+.linha-maior{
+    background: var(--laranja);
+    border-radius: 10px;
+    height: 3px;
+}
+.linha-menor{
+    background: var(--laranja);
+    border-radius: 10px;
+    width: 50%;
+    height: 3px;
+}
+
+.dia-da-semana, .mensagem, .servicos-agendados, .todos-servicos{
+    margin-left: 30px;
+    margin-bottom: 41px;
+
+}
+
+.dia-da-semana{
+    display: flex;
+    flex-direction: column;
+    width: 177px;
+    margin-top: 41px;
+}
+.dia-da-semana h2{
+    font-size: 20px;
+}
+.dia-da-semana span{
+    text-align: right;
+    font-size: 14px;
+}
+.mensagem{
+    margin-bottom: 80px;
+
+}
+
+.mensagem span{
+    color: var(--laranja);
+}
+.servicos-agendados h2{
+    font-weight: 500 ;
+    color: rgba(0, 0, 0, 0.678);
+}
+
+.servicos-agendados{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.servico-agendado{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 190px;
+    width: 290px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.171);
+    border-top: 1px solid rgba(0, 0, 0, 0.171);
+}
+
+.servico-agendado img{
+    background-size: cover ;
+}
+
+.descricao-servico{
+    width: 160px;
+    height: 150px;
+}
+
+.todos-servicos{
+    color: var(--laranja);
+}
+
+.menu-content{
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 100px;
+    padding: 20px;
+    height: 90vh;
+    width: 70%;
+    top: 50px;
+    left: -100vw;
+    border-radius: 0 30px 30px 0;
+    background: #d3a376ec;
+    backdrop-filter: blur(8px);
+    z-index: 10;
+    transition: right .5s ease-in-out;
+}
+
+.perfil{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 214px;
+    height: 100px;
+}
+.nome-edit{
+    width: 126px;
+    height: 44px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+}
+.nome-edit button{
+    border: 1px solid white;
+    color: white;
+    background: none;
+    padding: 5px;
+    border-radius: 10px;
+    width: 50%;
+}
+
+.mostrar{
+    display: flex;
+    left: 0;
+}
+
+.menu-content svg{
+    color:white;
+    position:absolute;
+    right: 20px;
+}
+
+.links{
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+    width: 70%;
+    color: white;
+    justify-content: space-around;
+}
+.links a{
+    font-weight: 500;
+    font-size: 20px;
+    text-align: center;
+    color: white;
+
+}
+
+
+.servicos{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 70%;
+    width: 100%;
+}
+
+.page-content-inicio{
+    display: flex;  
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: start; 
+    height: 100%;
+    background: var(--gelo);
+    overflow: auto;
+}
+
+.swiper {
+  width: 100%;
+  height: 400px;
+  padding: 10px;
+}
+
+
+
+.card-servico{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    border-radius: 10px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.411);
+    overflow: hidden;
+}
+
+#servico1{
+    background-image: url('../img/img1.png');
+    background-size: 100% cover;
+    background-position: bottom ;
+    object-fit: cover;
+
+}
+#servico2{
+    background-image: url('../img/img2.png');
+    background-size: cover;
+    background-position: 0px -150px   ;
+}
+#servico3{
+    background-image: url('../img/img3.jpeg');
+    background-size: cover;
+    background-position: 0px -70px;
+}
+
+
+.descricao{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    height: 50%;
+    width: 100%;
+    background: #D2D2D2;
+    border-radius: 18px 18px 0 0 ;
+}
+
+.descricao p{
+    font-weight: 600;
+    font-family: 'montserrat alternates';
+    font-size: 16px;
+    text-transform: capitalize;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.404);
+}
+
+.btn-agendar{
+    border: none;
+    width: 6rem;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    background: #F582AE;
+    color: white;
+    font-weight: 500;
+}
+

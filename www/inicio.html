@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <!-- Color theme for statusbar (Android only) -->
     <meta name="theme-color" content="#2196f3">
     <!-- Your app title -->
@@ -15,8 +15,11 @@
     <link rel="stylesheet" href="lib/framework7-bundle.min.css">
     <!-- CSS PERSONALIZADO PARA MENU-->
     <link rel="stylesheet" href="css/personalizado.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/inicio.css">
     <!--Ícones Material Design-->
     <link rel="stylesheet" href="css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
 
 </head>
@@ -28,21 +31,97 @@
         <!-- Your main view, should have "view-main" class -->
         <div class="view view-main">
             <!-- Initial Page, "data-name" contains page name -->
-            <div data-name="link2" class="page">
+            <div data-name="inicio" class="page">
 
                 <!-- Top Navbar -->
-                <div class="navbar">
-                    <div class="navbar-bg"></div>
-                    <div class="navbar-inner justify-content-center">
-                        <div class="title ">Link 2</div>
+                <div class="top-bar">
+                    
+                    <div class="menu">
+                        <div class="linha-maior"></div>
+                        <div class="linha-menor"></div>
                     </div>
                 </div>
-
-                <!-- Scrollable page content -->
-                <div class="page-content">
-                    <div class="block">
-                        Conteúdo do link 2
+                
+                <div class="menu-content">
+                    <div class="close">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                    </svg>
                     </div>
+                    <div class="perfil">
+                        <img src="./img/perfil.png" height="60px" width="60px"  style="object-fit: cover;border-radius: 50%;border: 3px solid white;" alt="">
+                        <div class="nome-edit">
+                            
+                            <button>Editar</button>
+                        </div>
+                    </div>
+                    <div class="links">
+                        <a href="#">Meus Agendamentos</a>
+                        <a href="#">Dúvidas</a>
+                        <a href="#">Programa de Fidelidade</a>
+                        <a href="#" id="sair">Sair</a>
+                    </div>
+                </div>
+                <!-- Scrollable page content -->
+                <div class="page-content-inicio">
+                    <div class="dia-da-semana">
+                        <h2>Terça-Feira</h2>
+                        <span>03 de Dezembro</span>
+                    </div>
+                    <div class="mensagem">
+                        
+                    </div>
+                    <div class="servicos-agendados">
+                        <h2>Serviços Agendados</h2>
+                        <div class="servico-agendado">
+                            <img src="./img/img1.png" alt="" style="object-fit: cover;border-radius: 10px;" width="100px" height="150px">
+                            <div class="descricao-servico">
+                                <span><strong>Micro Pigmentação</strong></span>
+                                <p><strong>Horário</strong>: ás 10:30 do dia 05 de janeiro de 2026</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="todos-servicos">
+                        <h3>Todos os Serviços</h3>
+                    </div>
+                    <div class="servicos">
+                        <div class="swiper">
+                            <!-- Additional required wrapper -->
+                            <div class="swiper-wrapper">
+                                <!-- Slides -->
+                                <div class="swiper-slide card-servico" id="servico1">
+                                    <div class="descricao">
+                                        <p class="nome-servico">Micro Pigmentação</p>
+                                        <span class="duracao"><strong>Duração:</strong> 60min</span>
+                                        <span class="preco"><strong>Preço:</strong> R$ 40.00</span>
+                                        <button class="btn-agendar">Agendar</button>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide card-servico" id="servico2">
+                                    <div class="descricao">
+                                        <p class="nome-servico">Alongamento de Cílios</p>
+                                        <span class="duracao"><strong>Duração:</strong> 60min</span>
+                                        <span class="preco"><strong>Preço:</strong> R$ 40.00</span>
+                                        <button class="btn-agendar">Agendar</button>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide card-servico" id="servico3">
+                                    <div class="descricao">
+                                        <p class="nome-servico">Design de Sobrancelha</p>
+                                        <span class="duracao"><strong>Duração:</strong> 60min</span>
+                                        <span class="preco"><strong>Preço:</strong> R$ 40.00</span>
+                                        <button class="btn-agendar">Agendar</button>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <!-- If we need pagination -->
+                            <div class="swiper-pagination"></div>
+
+                        </div>
+
+                    </div>
+                    
                 </div>
             </div>
         </div>

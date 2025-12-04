@@ -1,3 +1,4 @@
+
 //INICIALIZAÇÃO DO F7 QUANDO DISPOSITIVO ESTÁ PRONTO
 document.addEventListener('deviceready', onDeviceReady, false);
 var app = new Framework7({
@@ -30,6 +31,8 @@ var app = new Framework7({
 		},
 		pageInit: function (event, page) {
 		// fazer algo quando a página for inicializada
+      $.getScript('js/index.js')
+      
 		},
 		pageBeforeRemove: function (event, page) {
 		// fazer algo antes da página ser removida do DOM
@@ -49,6 +52,36 @@ var app = new Framework7({
 		},
 		pageInit: function (event, page) {
 		// fazer algo quando a página for inicializada
+    $.getScript('js/inicio.js')
+    var swiper = new Swiper(".swiper", {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        autoplay:true,
+        centeredSlides : true,
+        delay: 3000,
+        loop:false,
+        pagination: {
+          el: '.swiper-pagination',
+        },
+        breakpoints: {
+          50:{
+            slidesPerView: 1.2,
+            spaceBetween:30
+          },
+          640:{
+            slidesPerView: 2,
+            spaceBetween:30
+          },
+          990:{
+            slidesPerView: 3,
+            spaceBetween:30
+          },
+          1200:{
+            slidesPerView: 4,
+            spaceBetween:30
+          },
+        }
+      });
 		},
 		pageBeforeRemove: function (event, page) {
 		// fazer algo antes da página ser removida do DOM
@@ -79,7 +112,7 @@ var app = new Framework7({
 });
 
 //Para testes direto no navegador
-//var mainView = app.views.create('.view-main', { url: '/index/' });
+var mainView = app.views.create('.view-main', { url: '/index/' });
 
 //EVENTO PARA SABER O ITEM DO MENU ATUAL
 app.on('routeChange', function (route) {
