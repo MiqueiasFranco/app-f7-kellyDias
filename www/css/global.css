@@ -11,4 +11,105 @@
 :root {
     --laranja: #D3A376 ;
     --gelo: #FAF9F6;
+    --marrom: #3E2522;
+    --marrom-claro: #ffe0b2;
 }
+
+.top-bar{
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.menu{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 30px;
+    width: 40px ;
+    height: 12px;
+}
+
+.linha-maior{
+    background: var(--laranja);
+    border-radius: 10px;
+    height: 3px;
+}
+.linha-menor{
+    background: var(--laranja);
+    border-radius: 10px;
+    width: 50%;
+    height: 3px;
+}
+.menu-content{
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 100px;
+    padding: 20px;
+    height: 90vh;
+    width: 70%;
+    top: 50px;
+    left: -100vw;
+    border-radius: 0 30px 30px 0;
+    background: #d3a376ec;
+    backdrop-filter: blur(8px);
+    z-index: 10;
+    transition: right .5s ease-in-out;
+}
+
+.perfil{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 214px;
+    height: 100px;
+}
+.nome-edit{
+    display: flex;
+    flex-direction: column;
+    width: 126px;
+    height: auto;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    gap: 5px;
+}
+.btn-edit{
+    border: 1px solid white;
+    color: white;
+    background: none;
+    border-radius: 10px;
+    width: 50%;
+    text-align: center;
+}
+
+.mostrar{
+    display: flex;
+    left: 0;
+}
+
+.menu-content svg{
+    color:white;
+    position:absolute;
+    right: 20px;
+}
+
+.links{
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+    width: 70%;
+    color: white;
+    justify-content: space-around;
+}
+.links a{
+    font-weight: 500;
+    font-size: 20px;
+    text-align: center;
+    color: white;
+
+}
+

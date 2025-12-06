@@ -1,40 +1,119 @@
-let mensagem = document.querySelector('.mensagem')
-let menu = document.querySelector('.menu')
-let menuContent = document.querySelector('.menu-content')
-const closeDiv = document.querySelector('.close')
-let sair =  document.querySelector('#sair')
-let nomeEdit =  document.querySelector('.nome-edit')
 
-let usuarioSalvo = JSON.parse(localStorage.getItem('usuario'))
 
-nomeEdit.prepend(usuarioSalvo.nome)
-nomeEdit.style.textTransform = 'capitalize'
-nome.style.flexDirection = 'column-reverse'
+var data = new Date();
 
-mensagem.innerHTML = `<h2>Olá, <span>${usuarioSalvo.nome}</span></h2>`
-mensagem.style.textTransform = 'capitalize'
+$('.dia-da-semana').html(`<h2>${data.toLocaleDateString("pt-BR", { weekday: "long" })}</h2>
+                        <span>${data.toLocaleDateString("pt-BR",{ day: "2-digit",month: "long"} )}</span>`)
 
-menu.addEventListener('click', () => {
-    menuContent.style.display = 'flex';
-    
-    // força o navegador a aplicar o display antes da animação
-    requestAnimationFrame(() => {
-        menuContent.style.transition = 'all 0.5s ease-in-out';
-        menuContent.style.left = '0';
-    });
-});
+$('.mensagem').html(`<h2>Olá, <span>${window.usuarioSalvo.nome}</span></h2>`)
+$('.mensagem').css("text-transform",'capitalize')
 
-closeDiv.addEventListener('click', () => {
-    menuContent.style.transition = 'all 0.5s ease-in-out';
-    menuContent.style.left = '-100vw';
 
-    // espera a animação terminar antes de ocultar
-    setTimeout(() => {
-        menuContent.style.display = 'none';
-    }, 500); // mesmo tempo da transition
-});
 
-sair.addEventListener('click',()=>{
-    localStorage.removeItem('usuario')
-    app.views.main.router.navigate('/index/')
+// agendar um servico ao clicar
+Array.from($('.swiper-wrapper').children()).forEach(filho =>{
+    let button = filho.querySelector('button')
+    button.addEventListener('click',()=>{
+        window.nomeServico = filho.querySelector('.nome-servico')
+        window.duracaoServico = filho.querySelector('.duracao')
+        window.precoServico = filho.querySelector('.preco')
+        app.views.main.router.navigate('/agendamento/')
+    })  
 })
+
+// fazendo requisiçoes no banco de dados
+
+// lendo os dadoss
+fetch(window.env.SUPABASE_URL_SELECT, { 
+    methods: 'GET',
+    headers:{
+        'apikey':`${window.env.SUPABASE_KEY}`,
+        'Content-Type': 'application/json',
+        
+        }
+    }).then(responde=> responde.json()).then(dados=>{
+        let encontrou = false
+        const servicoVazio = document.createElement("div")
+        servicoVazio.classList.add('servico-agendado')
+        servicoVazio.classList.add('vazio')
+
+        const h2Vazio = document.createElement("h2")
+        h2Vazio.innerHTML = 'Não há Serviços Agendados'
+
+        servicoVazio.appendChild(h2Vazio)
+        dados.forEach(cliente =>{
+            
+            
+            console.log(cliente.whatsapp)
+            if(cliente.whatsapp == window.usuarioSalvo.whatsapp){
+                encontrou = true
+                const servicoAgendado = document.createElement('div')
+                servicoAgendado.classList.add('servico-agendado')
+
+                const img= document.createElement('img')
+                img.src = "./img/img1.png"
+                
+                const divDescricao =  document.createElement('div')
+                divDescricao.classList.add('descricao-servico')
+
+                const span = document.createElement('span')
+                const strong = document.createElement('strong')
+                strong.innerHTML = `${cliente.servico.nome}`
+                span.appendChild(strong)
+
+                const p = document.createElement('p')
+                const strongP = document.createElement('strong')
+                strongP.innerHTML = "Horário"
+                p.appendChild(strongP)
+                p.append(`: ${cliente.horario}`)
+
+                const buttonAgendado = document.createElement('button')
+                buttonAgendado.classList.add('btn-excluir')
+                buttonAgendado.innerHTML = 'Excluir'
+
+                divDescricao.appendChild(span)
+                divDescricao.appendChild(p)
+                divDescricao.appendChild(buttonAgendado)
+
+                servicoAgendado.appendChild(img)
+                servicoAgendado.appendChild(divDescricao)
+            
+                window.divServicoAgendado.appendChild(servicoAgendado)
+                
+                
+                buttonAgendado.addEventListener('click', ()=>{
+                    fetch(`${window.env.SUPABASE_URL_INSERT}?id=eq.${cliente.id}`, {
+                            method: "DELETE",
+                            headers: {
+                                'apikey': window.env.SUPABASE_KEY,
+                                'Authorization': `Bearer ${window.env.SUPABASE_KEY}`,
+                                'Content-Type': 'application/json',
+                                // Opcional: retornar os dados deletados
+                                'Prefer': 'return=representation'
+                            }
+                        })
+                        .then(response => {
+                            if (!response.ok) throw new Error("Erro ao deletar");
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log("Registro deletado:", data);
+                            window.divServicoAgendado.removeChild(servicoAgendado)
+                            window.divServicoAgendado.appendChild(servicoVazio)
+                        })
+                        .catch(err => {
+                            console.error("Erro:", err);
+                        });
+                })
+            }
+            
+            
+            
+        })
+        if(!encontrou){
+            
+            window.divServicoAgendado.appendChild(servicoVazio)
+        }
+    })
+
+console.log(JSON.parse(localStorage.getItem('usuario')))

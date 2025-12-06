@@ -32,6 +32,7 @@ var app = new Framework7({
 		pageInit: function (event, page) {
 		// fazer algo quando a página for inicializada
       $.getScript('js/index.js')
+      $.getScript('js/config.js')
       
 		},
 		pageBeforeRemove: function (event, page) {
@@ -52,6 +53,13 @@ var app = new Framework7({
 		},
 		pageInit: function (event, page) {
 		// fazer algo quando a página for inicializada
+    $.getScript('js/menu.js', function() {
+      if (typeof initMenu === 'function') {
+        initMenu(page.el);
+      } else {
+        console.error('initMenu não está definido após carregar menu.js');
+      }
+    });
     $.getScript('js/inicio.js')
     var swiper = new Swiper(".swiper", {
         slidesPerView: 1,
@@ -89,18 +97,28 @@ var app = new Framework7({
 	  }
     },
     {
-      path: '/link3/',
-      url: 'link3.html',
+      path: '/agendamento/',
+      url: 'agendamento.html',
       animate: false,
 	  on: {
 		pageBeforeIn: function (event, page) {
 		// fazer algo antes da página ser exibida
+    $.getScript('js/menu.js', function() {
+      if (typeof initMenu === 'function') {
+        initMenu(page.el);
+      } else {
+        console.error('initMenu não está definido após carregar menu.js');
+      }
+    });
 		},
 		pageAfterIn: function (event, page) {
 		// fazer algo depois da página ser exibida
 		},
 		pageInit: function (event, page) {
 		// fazer algo quando a página for inicializada
+    
+    $.getScript('js/agendamento.js')
+    
 		},
 		pageBeforeRemove: function (event, page) {
 		// fazer algo antes da página ser removida do DOM

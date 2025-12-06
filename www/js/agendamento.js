@@ -1,0 +1,223 @@
+
+
+var data = new Date();
+var dataAtual = new Date();
+
+var count = 0
+
+
+$(".descricao-escolhido").append(window.nomeServico)
+$(".descricao-escolhido").append(window.duracaoServico)
+$(".descricao-escolhido").append(window.precoServico)
+var updateCalendar = () => {
+
+    const anoAtual = data.getFullYear();
+    let mesAtual = data.getMonth();
+
+    let primeiroDiaMes = new Date(anoAtual, mesAtual, 1);
+    let ultimoDiaMes = new Date(anoAtual, mesAtual + 1, 0);
+    const totalDias = ultimoDiaMes.getDate();
+
+    let indexPrimeiroDia = primeiroDiaMes.getDay();
+    let indexUltimoDia = ultimoDiaMes.getDay();
+
+    
+    $('.mes').html(data.toLocaleDateString( "pt-BR", { month: "long" } ));
+
+    // CRIANDO CONTEUDO HTML PARA OS DIAS DO MES ANTERIOR
+    for(let i = indexPrimeiroDia ; i > 0; i--){
+        const dataAnterior = new Date(anoAtual, mesAtual,0 - i + 1);
+        const divDiaAnterior = document.createElement("div");
+        divDiaAnterior.innerHTML = dataAnterior.getDate();
+        divDiaAnterior.classList.add("dia-anterior");
+        $('.num-dias').append(divDiaAnterior);
+    }
+    // CRIANDO CONTEUDO HTML PARA OS DIAS DO MES ATUAL
+    for(let i = 1 ; i <= totalDias; i++){
+        
+        const divDia = document.createElement("div");
+        divDia.id = `${i}`
+        divDia.innerHTML = i
+        divDia.classList.add("dia");
+        
+        // DEIXANDO O DIA ATUAL COM UMA COR DIFERENTE
+        if(i == dataAtual.getDate() && mesAtual == dataAtual.getMonth()){
+            divDia.classList.add("dia-atual");
+        }
+        // DEIXANDO OS DIAS ANTERIORES SEM SELEÇÃO
+        if(i < dataAtual.getDate() && mesAtual == dataAtual.getMonth()){
+            divDia.classList.remove('dia')
+            divDia.classList.add('dia-anterior')
+        }
+        // SOMENTE DIAS POSTERIORES SÃO SELETIVEIS
+        if(divDia.classList.contains('dia')){
+            
+            // CRIANDO DIV DE HORARIO PARA CADA DIA
+            const divHorario = document.createElement("div")
+            divHorario.id = divDia.id
+            divHorario.classList.add("div-horario");
+            divHorario.classList.add("inativo");
+            const h3Horario = document.createElement("h3")
+            h3Horario.innerHTML = 'Horários Disponíveis'
+            
+            const divHora = document.createElement("div")
+            divHora.classList.add("hora")
+
+            const buttonAgendar = document.createElement("button")
+            buttonAgendar.classList.add('btn-agendar')
+            buttonAgendar.innerHTML = 'Agendar'
+
+
+            divHorario.appendChild(h3Horario)
+            divHorario.appendChild(divHora)
+            divHorario.appendChild(buttonAgendar)
+            // VERIFICANDO SE A DIV HORARIO CORRESPONDE AO DIA 
+            if(divDia.id == divHorario.id){  
+                        
+                // ADICIONANDO HORARIOS
+                for(let i=9;i <= 18;i++){
+
+                    const divTime = document.createElement("div")
+                    divTime.classList.add("time")
+                    divTime.classList.add(`${i}`)
+                    if(i==9){
+                        divTime.innerHTML = `0${i}:00`
+                        
+                    }
+                    else{
+                        divTime.innerHTML = `${i}:00`
+                    }
+                    divHora.appendChild(divTime)
+                    divTime.addEventListener('click',()=>{
+                        window.hora = `${divHorario.id} de ${data.toLocaleDateString( "pt-BR", { month: "long" } )} ás ${i}:00hrs`
+                        // console.log(`${divHorario.id} de ${data.toLocaleDateString( "pt-BR", { month: "long" } )} ás ${i}:00hrs`)
+                    })
+                
+                }
+
+            }  
+            buttonAgendar.addEventListener('click',()=>{
+                // enviar para o banco de dados
+                const nomeServico = window.nomeServico.textContent
+                const duracaoServico = window.duracaoServico.textContent
+                const precoServico = window.precoServico.textContent
+                const nomeCliente = window.usuarioSalvo.nome
+                const whatsappCliente = window.usuarioSalvo.whatsapp
+                const horarioCliente = window.hora
+                const novoAgendamento = {
+                    nome: nomeCliente,
+                    whatsapp: whatsappCliente,
+                    servico: {
+                        nome: nomeServico,
+                        duracao: duracaoServico,
+                        preco: precoServico
+                    },
+                    horario: horarioCliente
+
+                }
+                fetch(window.env.SUPABASE_URL_INSERT, { 
+                    method: 'POST',
+                    headers:{
+                        'apikey':`${window.env.SUPABASE_KEY}`,
+                        'Content-Type': 'application/json',
+                        "Prefer": "return=representation",
+                        "Authorization": `Bearer ${window.env.SUPABASE_KEY}`
+                    },
+                    body: JSON.stringify(novoAgendamento)
+                    }).then(response =>{
+                        console.log("Status recebido:", response.status);
+
+                        return response.json().then(json => {
+                            // console.log("Resposta do Supabase:", json);
+                            
+                            if (!response.ok) {
+                                throw new Error("Erro Supabase");
+                            }
+
+                            return json;
+                        });
+                    }).then(data=>{
+                        console.log('POST funcionao', data)
+                    }).catch(err=>{
+                        console.error("erro:", err)
+                    })
+            })
+            
+            verificar(divHorario,divDia)
+        }
+            
+            $('.num-dias').append(divDia);
+            
+        }
+        
+        
+    }
+    
+
+
+
+
+// AO CLICAR NOS BOTÕES DE PRÓXIMO E ANTERIOR /////////////////////////
+
+$(".btnNext").on("click", () => {
+  
+    if(count < 2){
+        count ++
+        data.setMonth(data.getMonth() + 1);
+        $('.num-dias').html('');
+        $(".horarios").empty();
+        updateCalendar()
+    }
+    
+})
+
+$(".btnPrev").on("click", () => {
+    
+    if(count > 0){
+        
+        count --
+        data.setMonth(data.getMonth() - 1);
+
+        $('.num-dias').html('');
+        $(".horarios").empty();
+        updateCalendar()
+    }
+
+}
+)
+
+var verificar = (divhorario,divDia)=>{
+    
+    divDia.addEventListener('click',()=>{
+       if(divhorario.id == divDia.id){
+
+           if($(".horarios").children().length == 0){
+                $(".horarios").append(divhorario)
+                divhorario.classList.remove('inativo')
+           }
+           else{
+                Array.from($(".horarios").children()).forEach(filho =>{
+                    
+                    if(filho.id != divhorario.id){
+                        $(filho).remove()
+                        $(".horarios").append(divhorario)
+                        divhorario.classList.remove('inativo')
+                        
+                    }
+                    
+                })
+
+           }
+       }
+
+  
+    })
+    
+}
+
+
+
+
+updateCalendar();
+
+

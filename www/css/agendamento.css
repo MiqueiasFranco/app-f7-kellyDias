@@ -1,0 +1,182 @@
+.page-content-agendamento{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    overflow: auto;
+    background: var(--gelo);
+}
+
+.servico-escolhido{
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+    height: 200px;
+    margin: 30px;
+}
+
+.page-content-agendamento h2{
+    margin: 30px;
+}
+
+.descricao-escolhido {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    height: 100%;
+}
+
+.descricao-escolhido p{
+    margin-top: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.data-hora{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    margin-bottom: 200px;
+}
+
+.horarios{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    height: 300px;
+}
+.hora{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 90%;
+    height: 30%;
+    gap: 10px;
+}
+
+.time{
+    background: var(--laranja);
+    padding: 5px;
+    border-radius: 10px;
+    color: var(--marrom);
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.384);
+    text-align: center;
+    cursor: pointer;
+    height: 30px;
+    transition: .3s ease-in-out;
+}
+.calendario{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.205);
+    box-shadow: 2px 4px 6px var(--laranja);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 30px;
+
+}
+
+.header{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.mes{
+    text-transform: capitalize;
+    font-weight: bold;
+}
+
+.nome-dias{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 15px;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.num-dias{
+    display: grid;
+    grid-template-columns: repeat(7,1fr);
+    text-align: center;  
+    gap: 5px;
+}
+
+.dia-anterior{
+    color: grey;
+}
+
+.dia-atual{
+    background-color: var(--marrom);
+    border-radius: 5px;
+    color: var(--marrom-claro);
+    font-weight: 600;
+}
+
+.dia{
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+}
+
+.dia:hover{
+    background-color: var(--laranja);
+    color: var(--marrom);
+    border-radius: 5px; }
+
+
+
+.calendario .btnPrev, .calendario .btnNext{
+    display: flex;
+    border: none;
+    background: var(--laranja);
+    color: var(--marrom);
+    padding: 10px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    height: 40px;
+    width:  40px;
+}
+
+
+
+.div-horario{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: #fbfbf8;
+    border: 1px solid rgba(0, 0, 0, 0.205);
+    box-shadow: 2px 4px 6px var(--laranja);
+    border-radius: 10px;
+    align-items: center;
+    width: 70%;
+    height: 100%;
+}
+
+.div-horario h3{
+    border-bottom: .5px solid #3333339f;
+
+}
+.div-horario .btn-agendar{
+    background:var(--marrom);
+    color: var(--laranja);
+}
+
+.inativo{
+    display: none;
+}
+
+
+
+.time:hover{
+    background-color: #8bd3dd;
+}
+

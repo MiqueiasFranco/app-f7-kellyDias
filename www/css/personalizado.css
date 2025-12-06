@@ -12,7 +12,8 @@
     flex:1;
     height: 80px;  
     line-height: 25px; 
-	font-weight:bold;    
+	font-weight:bold;   
+    color: var(--laranja); 
 }
 
 .toolbar-inner .link:not(.active){
@@ -22,4 +23,9 @@
 
 .toolbar-inner > .link i{
     font-size: 28px;
+}
+
+.toolbar .tab-link-active {
+  color: var(--laranja) !important;
+  background-color: #007aff !important; /* exemplo */
 }
