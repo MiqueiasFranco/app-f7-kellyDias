@@ -1,3 +1,19 @@
+.voltar{
+    display: flex;
+    justify-content: end;
+    padding: 5px;
+    position: absolute;
+    width: auto;
+    top: 70px;
+    left: 85vw;
+    padding: 5px 10px 5px 10px;
+    border-radius: 10px;
+    border: 1px solid white;
+    background: var(--laranja);
+    color: white;
+}
+
+
 .page-content-agendamento{
     display: flex;
     flex-direction: column;

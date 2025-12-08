@@ -1,7 +1,7 @@
  
 $.getScript('js/menu.js')
 if(JSON.parse(localStorage.getItem('usuario'))){
-    app.views.main.router.navigate('/inicio/')
+    app.views.main.router.navigate('/agendamento/')
 }
 else{
     document.querySelector('.login').addEventListener('submit',(event)=>{

@@ -8,7 +8,9 @@ $('.dia-da-semana').html(`<h2>${data.toLocaleDateString("pt-BR", { weekday: "lon
 $('.mensagem').html(`<h2>Olá, <span>${window.usuarioSalvo.nome}</span></h2>`)
 $('.mensagem').css("text-transform",'capitalize')
 
-
+var h2 = document.createElement('h2')
+h2.innerHTML = 'Serviços Agendados'
+window.divServicoAgendado.appendChild(h2)
 
 // agendar um servico ao clicar
 Array.from($('.swiper-wrapper').children()).forEach(filho =>{
@@ -40,13 +42,17 @@ fetch(window.env.SUPABASE_URL_SELECT, {
         const h2Vazio = document.createElement("h2")
         h2Vazio.innerHTML = 'Não há Serviços Agendados'
 
+
+        if(!$('.servico-agendado')){
+            window.divServicoAgendado.appendChild(servicoVazio)
+        }
         servicoVazio.appendChild(h2Vazio)
         dados.forEach(cliente =>{
             
             
-            console.log(cliente.whatsapp)
             if(cliente.whatsapp == window.usuarioSalvo.whatsapp){
                 encontrou = true
+                
                 const servicoAgendado = document.createElement('div')
                 servicoAgendado.classList.add('servico-agendado')
 
@@ -55,6 +61,7 @@ fetch(window.env.SUPABASE_URL_SELECT, {
                 
                 const divDescricao =  document.createElement('div')
                 divDescricao.classList.add('descricao-servico')
+                
 
                 const span = document.createElement('span')
                 const strong = document.createElement('strong')
@@ -99,11 +106,11 @@ fetch(window.env.SUPABASE_URL_SELECT, {
                         .then(data => {
                             console.log("Registro deletado:", data);
                             window.divServicoAgendado.removeChild(servicoAgendado)
-                            window.divServicoAgendado.appendChild(servicoVazio)
                         })
                         .catch(err => {
                             console.error("Erro:", err);
                         });
+
                 })
             }
             
@@ -116,4 +123,3 @@ fetch(window.env.SUPABASE_URL_SELECT, {
         }
     })
 
-console.log(JSON.parse(localStorage.getItem('usuario')))

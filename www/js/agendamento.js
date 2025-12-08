@@ -5,12 +5,55 @@ var dataAtual = new Date();
 
 var count = 0
 
+$('.voltar').on('click',()=>{
+    app.views.main.router.navigate('/inicio/')
+})
 
 $(".descricao-escolhido").append(window.nomeServico)
 $(".descricao-escolhido").append(window.duracaoServico)
 $(".descricao-escolhido").append(window.precoServico)
-var updateCalendar = () => {
 
+var dadosAgendados = [];
+
+async function carregarAgendados() {
+    const res = await fetch(window.env.SUPABASE_URL_SELECT, {
+        headers:{
+            'apikey': window.env.SUPABASE_KEY
+        }
+    });
+
+    dadosAgendados = await res.json();
+}
+async function agendarCliente(novoAgendamento) {
+    fetch(window.env.SUPABASE_URL_INSERT, { 
+                    method: 'POST',
+                    headers:{
+                        'apikey':`${window.env.SUPABASE_KEY}`,
+                        'Content-Type': 'application/json',
+                        "Prefer": "return=representation",
+                        "Authorization": `Bearer ${window.env.SUPABASE_KEY}`
+                    },
+                    body: JSON.stringify(novoAgendamento)
+                    }).then(async response =>{
+                        console.log("Status recebido:", response.status);
+
+                        return response.json().then(json => {
+                            // console.log("Resposta do Supabase:", json);
+                            
+                            if (!response.ok) {
+                                throw new Error("Erro Supabase");
+                            }
+
+                            return json;
+                        });
+                    }).then(data=>{
+                        console.log('POST funcionao', data)
+                    }).catch(err=>{
+                        console.error("erro:", err)
+                    })
+}
+var updateCalendar = async () => {
+   
     const anoAtual = data.getFullYear();
     let mesAtual = data.getMonth();
 
@@ -50,6 +93,7 @@ var updateCalendar = () => {
             divDia.classList.add('dia-anterior')
         }
         // SOMENTE DIAS POSTERIORES SÃO SELETIVEIS
+        // horarios disponíveis no dia
         if(divDia.classList.contains('dia')){
             
             // CRIANDO DIV DE HORARIO PARA CADA DIA
@@ -71,6 +115,7 @@ var updateCalendar = () => {
             divHorario.appendChild(h3Horario)
             divHorario.appendChild(divHora)
             divHorario.appendChild(buttonAgendar)
+
             // VERIFICANDO SE A DIV HORARIO CORRESPONDE AO DIA 
             if(divDia.id == divHorario.id){  
                         
@@ -79,19 +124,25 @@ var updateCalendar = () => {
 
                     const divTime = document.createElement("div")
                     divTime.classList.add("time")
-                    divTime.classList.add(`${i}`)
-                    if(i==9){
-                        divTime.innerHTML = `0${i}:00`
-                        
+                    divTime.dataset.day = divHorario.id
+                    divTime.dataset.hour = i
+                    
+                    let horaLabel = i < 10 ? `0${i}:00` : `${i}:00`;
+                    divTime.innerHTML = horaLabel
+
+                    window.horaFormatada = `${divHorario.id} de ${data.toLocaleDateString( "pt-BR", { month: "long" } )} ás ${horaLabel}hrs`
+
+                    divTime.addEventListener('click',()=>{
+                        window.horaFormatada = `${divHorario.id} de ${data.toLocaleDateString( "pt-BR", { month: "long" } )} ás ${horaLabel}hrs`
+                    })
+
+                    const ocupado = dadosAgendados.some(a => a.horario === window.horaFormatada);
+                    if(ocupado){
+                        divTime.remove()
                     }
                     else{
-                        divTime.innerHTML = `${i}:00`
+                        divHora.appendChild(divTime)
                     }
-                    divHora.appendChild(divTime)
-                    divTime.addEventListener('click',()=>{
-                        window.hora = `${divHorario.id} de ${data.toLocaleDateString( "pt-BR", { month: "long" } )} ás ${i}:00hrs`
-                        // console.log(`${divHorario.id} de ${data.toLocaleDateString( "pt-BR", { month: "long" } )} ás ${i}:00hrs`)
-                    })
                 
                 }
 
@@ -103,7 +154,7 @@ var updateCalendar = () => {
                 const precoServico = window.precoServico.textContent
                 const nomeCliente = window.usuarioSalvo.nome
                 const whatsappCliente = window.usuarioSalvo.whatsapp
-                const horarioCliente = window.hora
+                const horarioCliente = window.horaFormatada
                 const novoAgendamento = {
                     nome: nomeCliente,
                     whatsapp: whatsappCliente,
@@ -115,32 +166,7 @@ var updateCalendar = () => {
                     horario: horarioCliente
 
                 }
-                fetch(window.env.SUPABASE_URL_INSERT, { 
-                    method: 'POST',
-                    headers:{
-                        'apikey':`${window.env.SUPABASE_KEY}`,
-                        'Content-Type': 'application/json',
-                        "Prefer": "return=representation",
-                        "Authorization": `Bearer ${window.env.SUPABASE_KEY}`
-                    },
-                    body: JSON.stringify(novoAgendamento)
-                    }).then(response =>{
-                        console.log("Status recebido:", response.status);
-
-                        return response.json().then(json => {
-                            // console.log("Resposta do Supabase:", json);
-                            
-                            if (!response.ok) {
-                                throw new Error("Erro Supabase");
-                            }
-
-                            return json;
-                        });
-                    }).then(data=>{
-                        console.log('POST funcionao', data)
-                    }).catch(err=>{
-                        console.error("erro:", err)
-                    })
+                agendarCliente(novoAgendamento)
             })
             
             verificar(divHorario,divDia)
@@ -151,10 +177,8 @@ var updateCalendar = () => {
         }
         
         
-    }
+}
     
-
-
 
 
 // AO CLICAR NOS BOTÕES DE PRÓXIMO E ANTERIOR /////////////////////////
@@ -187,7 +211,7 @@ $(".btnPrev").on("click", () => {
 )
 
 var verificar = (divhorario,divDia)=>{
-    
+    // mostrar horarios disponíveis correspondentes ao dia
     divDia.addEventListener('click',()=>{
        if(divhorario.id == divDia.id){
 
@@ -214,10 +238,12 @@ var verificar = (divhorario,divDia)=>{
     })
     
 }
+async function init() {
+    await carregarAgendados();
+    console.log("dadosAgendados carregados:", dadosAgendados);
+    updateCalendar();
+}
 
-
-
-
-updateCalendar();
+init();
 
 

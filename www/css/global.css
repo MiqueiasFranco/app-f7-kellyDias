@@ -21,6 +21,18 @@
     width: 100%;
 }
 
+.logo-inicio{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: bold;
+    font-style: italic;
+    font-family: 'montserrat alternates';
+}
+.logo-inicio span{
+    color: var(--laranja);
+}
+
 .menu{
     display: flex;
     flex-direction: column;
