@@ -170,3 +170,13 @@ body{
     border-radius: 10px;
     margin-left: 50%;
 }
+
+.vazio{
+    background: var(--laranja);
+    border-radius: 10px;
+    height: 80%;
+    padding: 10px;
+}
+.vazio h2{
+    color: rgba(255, 255, 255, 0.733);
+}

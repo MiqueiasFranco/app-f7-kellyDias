@@ -8,17 +8,13 @@ $('.dia-da-semana').html(`<h2>${data.toLocaleDateString("pt-BR", { weekday: "lon
 $('.mensagem').html(`<h2>Olá, <span>${window.usuarioSalvo.nome}</span></h2>`)
 $('.mensagem').css("text-transform",'capitalize')
 
-var h2 = document.createElement('h2')
-h2.innerHTML = 'Serviços Agendados'
-window.divServicoAgendado.appendChild(h2)
+
 
 // agendar um servico ao clicar
 Array.from($('.swiper-wrapper').children()).forEach(filho =>{
     let button = filho.querySelector('button')
-    button.addEventListener('click',()=>{
-        window.nomeServico = filho.querySelector('.nome-servico')
-        window.duracaoServico = filho.querySelector('.duracao')
-        window.precoServico = filho.querySelector('.preco')
+    button.addEventListener('click',()=>{ 
+        window.cardServico = filho
         app.views.main.router.navigate('/agendamento/')
     })  
 })
@@ -52,7 +48,9 @@ fetch(window.env.SUPABASE_URL_SELECT, {
             
             if(cliente.whatsapp == window.usuarioSalvo.whatsapp){
                 encontrou = true
-                
+                var h2 = document.createElement('h2')
+                h2.innerHTML = 'Serviços Agendados'
+                window.divServicoAgendado.appendChild(h2)
                 const servicoAgendado = document.createElement('div')
                 servicoAgendado.classList.add('servico-agendado')
 
@@ -106,6 +104,8 @@ fetch(window.env.SUPABASE_URL_SELECT, {
                         .then(data => {
                             console.log("Registro deletado:", data);
                             window.divServicoAgendado.removeChild(servicoAgendado)
+                            window.divServicoAgendado.removeChild(h2)
+                            window.divServicoAgendado.appendChild(servicoVazio)
                         })
                         .catch(err => {
                             console.error("Erro:", err);

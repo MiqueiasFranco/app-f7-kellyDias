@@ -5,13 +5,49 @@ var dataAtual = new Date();
 
 var count = 0
 
+// VOLTAR AO CLICAR NA SETA
 $('.voltar').on('click',()=>{
     app.views.main.router.navigate('/inicio/')
 })
 
-$(".descricao-escolhido").append(window.nomeServico)
-$(".descricao-escolhido").append(window.duracaoServico)
-$(".descricao-escolhido").append(window.precoServico)
+// CRIAÇÃO DA AREA DE SERVICO ESCOLHIDO
+var descricaoEscolhido = document.createElement('div')
+descricaoEscolhido.classList.add('descricao-escolhido')
+
+var imgEscolhido = document.createElement('img')
+
+
+// VERIFICANDO SE HÁ UM SERVICO ESCOLHIDO
+if(window.cardServico){
+    var elemento = document.querySelector(`#${window.cardServico.id}`);
+    var style = window.getComputedStyle(elemento);
+    var bg = style.backgroundImage;
+    var url = bg.substring(31)
+    imgEscolhido.src = url.replace('")','')
+    
+    $(".servico-escolhido").append(imgEscolhido)
+    descricaoEscolhido.appendChild(elemento.querySelector('.nome-servico'))
+    descricaoEscolhido.appendChild(elemento.querySelector('.duracao'))
+    descricaoEscolhido.appendChild(elemento.querySelector('.preco'))
+    $(".servico-escolhido").append(descricaoEscolhido)
+    window.nomeServico = descricaoEscolhido.querySelector('.nome-servico')
+    window.duracaoServico = descricaoEscolhido.querySelector('.duracao')
+    window.precoServico = descricaoEscolhido.querySelector('.preco')
+}else{
+    
+    var h2Vazio = document.createElement('h2')
+    h2Vazio.innerHTML = 'Voçê Ainda não escolheu um serviço'
+    $('.servico-escolhido').append(h2Vazio)
+    // $('.descricao-escolhido').css('width','100%')
+    // $('.descricao-escolhido').css('justify-content','center')
+    $('.h2-escolha').css('display','none')
+    $('.data-hora').css('display','none')
+    $('.calendario').css('display','none')
+}
+
+
+
+// $(".servico-escolhido").prepend(imgEscolhido)
 
 var dadosAgendados = [];
 
@@ -240,7 +276,6 @@ var verificar = (divhorario,divDia)=>{
 }
 async function init() {
     await carregarAgendados();
-    console.log("dadosAgendados carregados:", dadosAgendados);
     updateCalendar();
 }
 
