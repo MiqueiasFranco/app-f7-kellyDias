@@ -22,9 +22,10 @@ if(window.cardServico){
     var elemento = document.querySelector(`#${window.cardServico.id}`);
     var style = window.getComputedStyle(elemento);
     var bg = style.backgroundImage;
-    var url = bg.substring(31)
+    var url ='../'+ bg.substring(31)
     imgEscolhido.src = url.replace('")','')
-    
+    window.urlImg = url.replace('")','')
+
     $(".servico-escolhido").append(imgEscolhido)
     descricaoEscolhido.appendChild(elemento.querySelector('.nome-servico'))
     descricaoEscolhido.appendChild(elemento.querySelector('.duracao'))
@@ -191,13 +192,15 @@ var updateCalendar = async () => {
                 const nomeCliente = window.usuarioSalvo.nome
                 const whatsappCliente = window.usuarioSalvo.whatsapp
                 const horarioCliente = window.horaFormatada
+                const imgServico = window.urlImg
                 const novoAgendamento = {
                     nome: nomeCliente,
                     whatsapp: whatsappCliente,
                     servico: {
                         nome: nomeServico,
                         duracao: duracaoServico,
-                        preco: precoServico
+                        preco: precoServico,
+                        img: imgServico
                     },
                     horario: horarioCliente
 

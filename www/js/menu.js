@@ -6,7 +6,7 @@ window.usuarioSalvo = JSON.parse(localStorage.getItem('usuario'))
 
 window.divServicoAgendado = document.querySelector('.servicos-agendados')
 window.data = new Date()
-
+var pageContent = document.querySelector('.page-content-inicio')
 
 var buttonEdit = document.createElement('div')
   buttonEdit.innerHTML = 'Editar'
@@ -35,11 +35,14 @@ window.initMenu = function (pageEl) {
       menuContent.style.transition = 'all 0.5s ease-in-out';
       menuContent.style.left = '0';
     });
+    setTimeout(() => { pageContent.classList.add('blur'); }, 500)
+    
   });
 
   $('.close').on('click', () => {
     menuContent.style.transition = 'all 0.5s ease-in-out';
     menuContent.style.left = '-100vw';
+    pageContent.classList.remove('blur')
     setTimeout(() => { menuContent.style.display = 'none'; }, 500);
   });
 
