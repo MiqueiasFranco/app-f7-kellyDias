@@ -25,10 +25,9 @@ if(window.cardServico){
 
     var url = bg.replace('url("','')
     var urlCorrigida = url.lastIndexOf('/') - 3    
-    window.urlReal = url.slice(urlCorrigida)
-    imgEscolhido.src = urlReal.replace('")','')
+    window.urlReal = url.slice(urlCorrigida).replace('")','')
+    imgEscolhido.src = urlReal
 
-    console.log(urlReal)
     
     $(".servico-escolhido").append(imgEscolhido)
     descricaoEscolhido.appendChild(elemento.querySelector('.nome-servico'))
@@ -209,7 +208,10 @@ var updateCalendar = async () => {
                     horario: horarioCliente
 
                 }
-                agendarCliente(novoAgendamento)
+                app.dialog.confirm(`Deseja realmente para ${window.horaFormatada} ?`,'Sim', ()=>{
+
+                    agendarCliente(novoAgendamento)
+                })
             })
             
             verificar(divHorario,divDia)

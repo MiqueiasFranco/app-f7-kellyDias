@@ -53,9 +53,9 @@ fetch(window.env.SUPABASE_URL_SELECT, {
                 
                 const servicoAgendado = document.createElement('div')
                 servicoAgendado.classList.add('servico-agendado')
-
+                var url = cliente.servico.img
                 const img= document.createElement('img')
-                img.src = cliente.servico.img
+                img.src = url.replace('")','')
                 
                 const divDescricao =  document.createElement('div')
                 divDescricao.classList.add('descricao-servico')
