@@ -22,10 +22,14 @@ if(window.cardServico){
     var elemento = document.querySelector(`#${window.cardServico.id}`);
     var style = window.getComputedStyle(elemento);
     var bg = style.backgroundImage;
-    var url = bg.substring(30)
-    imgEscolhido.src = url.replace('")','')
-    window.urlImg = url.replace('")','')    
-    console.log(url)
+
+    var url = bg.replace('url("','')
+    var urlCorrigida = url.lastIndexOf('/') - 3    
+    window.urlReal = url.slice(urlCorrigida)
+    imgEscolhido.src = urlReal.replace('")','')
+
+    console.log(urlReal)
+    
     $(".servico-escolhido").append(imgEscolhido)
     descricaoEscolhido.appendChild(elemento.querySelector('.nome-servico'))
     descricaoEscolhido.appendChild(elemento.querySelector('.duracao'))
@@ -192,7 +196,7 @@ var updateCalendar = async () => {
                 const nomeCliente = window.usuarioSalvo.nome
                 const whatsappCliente = window.usuarioSalvo.whatsapp
                 const horarioCliente = window.horaFormatada
-                const imgServico = window.urlImg
+                const imgServico = window.urlReal
                 const novoAgendamento = {
                     nome: nomeCliente,
                     whatsapp: whatsappCliente,
