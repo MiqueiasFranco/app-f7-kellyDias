@@ -22,10 +22,10 @@ if(window.cardServico){
     var elemento = document.querySelector(`#${window.cardServico.id}`);
     var style = window.getComputedStyle(elemento);
     var bg = style.backgroundImage;
-    var url ='../'+ bg.substring(31)
+    var url = bg.substring(30)
     imgEscolhido.src = url.replace('")','')
-    window.urlImg = url.replace('")','')
-
+    window.urlImg = url.replace('")','')    
+    console.log(url)
     $(".servico-escolhido").append(imgEscolhido)
     descricaoEscolhido.appendChild(elemento.querySelector('.nome-servico'))
     descricaoEscolhido.appendChild(elemento.querySelector('.duracao'))
