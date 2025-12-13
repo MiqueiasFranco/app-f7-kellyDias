@@ -4,7 +4,6 @@ window.menuContent = document.querySelector('.menu-content')
 
 window.usuarioSalvo = JSON.parse(localStorage.getItem('usuario'))
 
-window.divServicoAgendado = document.querySelector('.servicos-agendados')
 window.data = new Date()
 var pageContent = document.querySelector('.page-content-inicio')
 
@@ -48,6 +47,7 @@ window.initMenu = function (pageEl) {
 
   $('.sair').on('click', () => {
     localStorage.removeItem('usuario');
+    localStorage.removeItem('cliente');
     app.views.main.router.navigate('/index/');
   });
 };

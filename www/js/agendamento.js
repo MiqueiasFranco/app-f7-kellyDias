@@ -13,9 +13,7 @@ $('.voltar').on('click',()=>{
 // CRIAÇÃO DA AREA DE SERVICO ESCOLHIDO
 var descricaoEscolhido = document.createElement('div')
 descricaoEscolhido.classList.add('descricao-escolhido')
-
 var imgEscolhido = document.createElement('img')
-
 
 // VERIFICANDO SE HÁ UM SERVICO ESCOLHIDO
 if(window.cardServico){
@@ -76,7 +74,7 @@ async function agendarCliente(novoAgendamento) {
                     body: JSON.stringify(novoAgendamento)
                     }).then(async response =>{
                         console.log("Status recebido:", response.status);
-
+                        
                         return response.json().then(json => {
                             // console.log("Resposta do Supabase:", json);
                             
@@ -88,6 +86,9 @@ async function agendarCliente(novoAgendamento) {
                         });
                     }).then(data=>{
                         console.log('POST funcionao', data)
+                        cliente.push(data[0])
+                        localStorage.setItem('cliente',JSON.stringify(cliente))
+                        atualizarDados()
                     }).catch(err=>{
                         console.error("erro:", err)
                     })
@@ -208,9 +209,9 @@ var updateCalendar = async () => {
                     horario: horarioCliente
 
                 }
-                app.dialog.confirm(`Deseja realmente para ${window.horaFormatada} ?`,'Sim', ()=>{
-
+                app.dialog.confirm(`Deseja realmente agendar para ${window.horaFormatada} ?`,'Agendamento', ()=>{
                     agendarCliente(novoAgendamento)
+                    app.views.main.router.navigate('/inicio/')
                 })
             })
             

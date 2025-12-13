@@ -1,5 +1,6 @@
  
 $.getScript('js/menu.js')
+ 
 if(JSON.parse(localStorage.getItem('usuario'))){
     app.views.main.router.navigate('/inicio/')
 }

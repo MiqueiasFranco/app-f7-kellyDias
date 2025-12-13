@@ -47,6 +47,7 @@ var app = new Framework7({
 	  on: {
 		pageBeforeIn: function (event, page) {
 		// fazer algo antes da página ser exibida
+    $.getScript('js/inicio.js')
 		},
 		pageAfterIn: function (event, page) {
 		// fazer algo depois da página ser exibida
@@ -60,7 +61,7 @@ var app = new Framework7({
         console.error('initMenu não está definido após carregar menu.js');
       }
     });
-    $.getScript('js/inicio.js')
+    
     var swiper = new Swiper(".swiper", {
         slidesPerView: 1,
         spaceBetween: 30,
