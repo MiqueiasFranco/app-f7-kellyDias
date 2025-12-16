@@ -26,7 +26,6 @@ var cliente =  []
     
     atualizarDados()
     
-    console.log(cliente)
 }
 buscarDados()
 
