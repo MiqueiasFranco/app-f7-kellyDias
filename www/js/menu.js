@@ -20,8 +20,13 @@ $('.nome-edit').css("text-transform", "capitalize")
 
 buttonEdit.addEventListener('click',()=>{
   app.dialog.confirm(`<input  type="text" class ="input-nome" placeholder="Digite um nome">`,'Editar Nome',function(){
-    let nome = document.querySelector('.input-nome').value
-    nomeUsuario.innerHTML = nome
+    let nomeInput = document.querySelector('.input-nome').value
+    nomeUsuario.innerHTML = nomeInput
+    let usuario = {
+      nome: nomeInput,
+      whatsapp: window.usuarioSalvo.whatsapp
+    }
+    localStorage.setItem('usuario',JSON.stringify(usuario))
     $('.nome-edit').empty().append(nomeUsuario, buttonEdit)
   })
 })
@@ -59,7 +64,8 @@ window.initMenu = function (pageEl) {
     menuContent.style.transition = 'all 0.5s ease-in-out';
     menuContent.style.left = '-100vw';
     pageContent.classList.remove('blur')
-    setTimeout(() => { menuContent.style.display = 'none'; }, 500);
+    setTimeout(() => { menuContent.style.display = 'none';app.views.main.router.refreshPage() }, 500);
+    
   });
 
   $('.sair').on('click', () => {
