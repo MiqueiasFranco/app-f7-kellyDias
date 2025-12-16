@@ -42,6 +42,14 @@
     height: 12px;
 }
 
+.nome-usuario{
+    font-size: 20px;
+}
+
+.input-nome{
+    padding: 20px;
+}
+
 .linha-maior{
     background: var(--laranja);
     border-radius: 10px;

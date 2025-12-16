@@ -10,8 +10,25 @@ var pageContent = document.querySelector('.page-content-inicio')
 var buttonEdit = document.createElement('div')
   buttonEdit.innerHTML = 'Editar'
   buttonEdit.classList.add('btn-edit')
-$('.nome-edit').empty().append(window.usuarioSalvo.nome, buttonEdit)
+
+var nomeUsuario = document.createElement('span')  
+nomeUsuario.innerHTML = window.usuarioSalvo.nome
+nomeUsuario.classList.add('nome-usuario')
+
+$('.nome-edit').empty().append(nomeUsuario, buttonEdit)
 $('.nome-edit').css("text-transform", "capitalize")
+
+buttonEdit.addEventListener('click',()=>{
+  app.dialog.confirm(`<input  type="text" class ="input-nome" placeholder="Digite um nome">`,'Editar Nome',function(){
+    let nome = document.querySelector('.input-nome').value
+    nomeUsuario.innerHTML = nome
+    $('.nome-edit').empty().append(nomeUsuario, buttonEdit)
+  })
+})
+
+
+
+
 
 // menu.js
 window.initMenu = function (pageEl) {
@@ -52,3 +69,22 @@ window.initMenu = function (pageEl) {
   });
 };
 
+document.querySelector('#img-perfil').addEventListener('click',()=>{
+
+  navigator.camera.getPicture(onSuccess, onFail, { 
+      quality: 50,
+      destinationType: Camera.DestinationType.FILE_URI,
+      correctOrientation:true
+   });
+  
+  function onSuccess(imageURI) {
+      window.resolveLocalFileSystemURL(imageURI, (entry) => {
+          let img = document.getElementById('img-perfil');
+          img.src = entry.toURL();
+      }, onFail);
+  }
+  
+  function onFail(message) {
+      alert('Failed because: ' + message);
+  }
+})
