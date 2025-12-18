@@ -64,7 +64,7 @@ window.initMenu = function (pageEl) {
     menuContent.style.transition = 'all 0.5s ease-in-out';
     menuContent.style.left = '-100vw';
     pageContent.classList.remove('blur')
-    
+
     let usuarioNome = JSON.parse(localStorage.getItem('usuario'))
     var msgHtml = `<h2>Olá, <span>${usuarioNome.nome}</span> </h2>`
     $('.mensagem').empty().append(msgHtml)
@@ -100,3 +100,34 @@ document.querySelector('.img-perfil').addEventListener('click',()=>{
       alert('Failed because: ' + message);
   }
 })
+
+
+$('.fidelidade').off().on('click', () => {
+
+  app.dialog.create({
+    title: 'Programa de Fidelidade',
+    text: `Ao término de cada serviço é entregue um cartão fidelidade e uma assinatura.
+              Ao completar 10 assinaturas você recebe um Voucher gratuidade para usar em qualquer serviço.`,
+    buttons: [
+      {
+        text: 'Fechar',
+        bold: true
+      }
+    ]
+  }).open();
+});
+
+$('.duvidas').off().on('click', () => {
+
+  app.dialog.create({
+    title: 'Dúvidas',
+    text: `Atrasos: a tolerância máxima é de 15 minutos.
+           Cancelamento: Só será cancelado o serviço com aviso de no mínimo 24hrs de antecedência.`,
+    buttons: [
+      {
+        text: 'Fechar',
+        bold: true
+      }
+    ]
+  }).open();
+});
