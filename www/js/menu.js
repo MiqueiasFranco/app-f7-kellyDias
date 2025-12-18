@@ -64,7 +64,13 @@ window.initMenu = function (pageEl) {
     menuContent.style.transition = 'all 0.5s ease-in-out';
     menuContent.style.left = '-100vw';
     pageContent.classList.remove('blur')
-    setTimeout(() => { menuContent.style.display = 'none';app.views.main.router.refreshPage() }, 500);
+    
+    let usuarioNome = JSON.parse(localStorage.getItem('usuario'))
+    var msgHtml = `<h2>Olá, <span>${usuarioNome.nome}</span> </h2>`
+    $('.mensagem').empty().append(msgHtml)
+    $('.mensagem').css("text-transform",'capitalize')
+    
+    setTimeout(() => { menuContent.style.display = 'none'; }, 500);
     
   });
 
@@ -75,7 +81,7 @@ window.initMenu = function (pageEl) {
   });
 };
 
-document.querySelector('#img-perfil').addEventListener('click',()=>{
+document.querySelector('.img-perfil').addEventListener('click',()=>{
 
   navigator.camera.getPicture(onSuccess, onFail, { 
       quality: 50,
@@ -85,7 +91,7 @@ document.querySelector('#img-perfil').addEventListener('click',()=>{
   
   function onSuccess(imageURI) {
       window.resolveLocalFileSystemURL(imageURI, (entry) => {
-          let img = document.getElementById('img-perfil');
+          let img = document.querySelector('.img-perfil');
           img.src = entry.toURL();
       }, onFail);
   }

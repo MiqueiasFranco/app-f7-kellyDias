@@ -120,12 +120,12 @@
 .links{
     display: flex;
     flex-direction: column;
-    height: 35%;
-    width: 70%;
+    height: 40%;
+    width: 80%;
     color: white;
     justify-content: space-around;
     margin-top: -50px;
-    /* border: 1px solid black; */
+    
 }
 
 .icone{
@@ -133,7 +133,7 @@
     flex-direction: reverse;
     gap: 20px;
     align-items: center;
-    /* border: 1px solid black; */
+    
     width: 100%;
 }
 .sair, .sair svg{
