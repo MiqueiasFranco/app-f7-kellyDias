@@ -70,7 +70,7 @@ function renderizarServico(){
             
             const buttonDelete = document.createElement('button')
             buttonDelete.classList.add('btn-excluir')
-            buttonDelete.innerHTML = 'Excluir'
+            buttonDelete.innerHTML = 'Cancelar'
             buttonDelete.id = item.id
 
             divDescricao.appendChild(span)
